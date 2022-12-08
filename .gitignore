@@ -84,7 +84,7 @@ StyleCopReport.xml
 *.pgd
 *.rsp
 *.sbr
-*.tlb
+#*.tlb #TLB files are used for ActiveX/COM automation such as NanoScan v2
 *.tli
 *.tlh
 *.tmp
