@@ -1,0 +1,68 @@
+# -*- coding: utf-8 -*-
+import win32com.client
+from win32com.client import VARIANT
+import pythoncom
+import time
+
+# instantiate NanoScan VII COM object, ob
+ob = win32com.client.DispatchEx('photon-nanoscan')
+#ob = win32com.client.dynamic.DumbDispatch('photon-nanoscan')
+
+# ensure that the automation server is opened
+time.sleep(5)
+
+# initialize analyzer
+ob.NsAsShowWindow = 1
+ob.NsAsSelectParameters(0x1|0x2|0x10|0x20)
+
+#ob.NsAsAcquireSync1Rev
+#ob.NsAsRunComputation
+
+# collect data for ten seconds
+ob.NsAsDataAcquisition = True;
+time.sleep(2)
+
+# get device count
+numDevices = VARIANT(pythoncom.VT_I2 | pythoncom.VT_BYREF, 999)
+ob.NsAsGetNumDevices(numDevices)
+print("Number of Devices: " + str(numDevices.value))
+
+# get aperture bounds
+sAperture = 0
+sROIIndex = 0
+pfLeftBound = VARIANT(pythoncom.VT_R4 | pythoncom.VT_BYREF, 999.9)
+pfRightBound = VARIANT(pythoncom.VT_R4 | pythoncom.VT_BYREF, 999.9)
+pbROIEnabled = VARIANT(pythoncom.VT_BOOL | pythoncom.VT_BYREF, False)
+
+ob.NsAsGetApertureLimits(0, pfLeftBound, pfRightBound)
+print("Left bound: " + str(pfLeftBound.value))
+print("Right bound: " + str(pfRightBound.value))
+
+ob.NsAsGetROI(sAperture, sROIIndex, pfLeftBound, pfRightBound, pbROIEnabled)
+print("ROI Left bound: " + str(pfLeftBound.value))
+print("ROI Right bound: " + str(pfRightBound.value))
+print("ROI Enabled: " + str(pbROIEnabled.value))
+
+# Try getting device ID
+deviceID = VARIANT(pythoncom.VT_BYREF | pythoncom.VT_I2, 1234567)
+ob.NsAsGetDeviceID(deviceID)
+print("Device Index: " + str(deviceID.value))
+
+#deviceList = VARIANT(pythoncom.VT_VARIANT | pythoncom.VT_BYREF, 1)
+#dumbob = win32com.client.dynamic.DumbDispatch(ob)
+#dumbob.NsAsGetDeviceList(deviceList)
+#print(deviceList)
+#print(deviceList.value[0])
+
+#deviceList = VARIANT(pythoncom.VT_SAFEARRAY | pythoncom.VT_I2 | pythoncom.VT_BYREF, [1,])
+#ob.NsAsGetDeviceList(deviceList)
+#print(deviceList.value[0])
+
+
+# collect data for ten seconds
+#ob.NsAsDataAcquisition = True;
+time.sleep(60)
+ob.NsAsDataAcquisition = False;
+
+# clear reference to the automation server so it can close
+ob = None
