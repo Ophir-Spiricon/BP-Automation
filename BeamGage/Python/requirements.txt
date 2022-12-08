@@ -1,0 +1,10 @@
+astroid==2.5.6
+colorama==0.4.4
+isort==5.8.0
+lazy-object-proxy==1.6.0
+mccabe==0.6.1
+pylint==2.8.2
+pythonnet==2.5.2
+six==1.16.0
+typed-ast==1.4.3
+wrapt==1.12.1

@@ -1,0 +1,62 @@
+###############################
+# Git Line Endings            #
+###############################
+# Set default behavior to automatically normalize line endings and improve merge results.
+* text=auto
+*.cs text=auto diff=csharp 
+# Force batch scripts to always use CRLF line endings so that if a repo is accessed
+# in Windows via a file share from Linux, the scripts will work.
+*.{cmd,[cC][mM][dD]} text eol=crlf
+*.{bat,[bB][aA][tT]} text eol=crlf
+# Force bash scripts to always use LF line endings so that if a repo is accessed
+# in Unix via a file share from Windows, the scripts will work.
+*.sh text eol=lf
+###############################
+# Git Auto-Detect Override    #
+###############################
+# Denote all files that are truly binary and should not be modified.
+*.jpg binary
+*.png binary
+*.gif binary
+*.docx binary
+*.rtf binary
+###############################
+# Git Large File System (LFS) #
+###############################
+ # Archives
+*.7z filter=lfs diff=lfs merge=lfs -text
+*.br filter=lfs diff=lfs merge=lfs -text
+*.gz filter=lfs diff=lfs merge=lfs -text
+*.tar filter=lfs diff=lfs merge=lfs -text
+*.zip filter=lfs diff=lfs merge=lfs -text
+# Documents
+*.pdf filter=lfs diff=lfs merge=lfs -text
+*.docx filter=lfs diff=lfs merge=lfs -text
+*.rtf filter=lfs diff=lfs merge=lfs -text
+# Images
+*.gif filter=lfs diff=lfs merge=lfs -text
+*.ico filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text
+*.png filter=lfs diff=lfs merge=lfs -text
+*.psd filter=lfs diff=lfs merge=lfs -text
+*.webp filter=lfs diff=lfs merge=lfs -text
+# Spiricon File Formats
+*.bgdata filter=lfs diff=lfs merge=lfs -text
+*.bgsetup filter=lfs diff=lfs merge=lfs -text
+*.bmdata filter=lfs diff=lfs merge=lfs -text
+*.bmsetup filter=lfs diff=lfs merge=lfs -text
+*.bwdata filter=lfs diff=lfs merge=lfs -text
+*.bwsetup filter=lfs diff=lfs merge=lfs -text
+*.bsqdata filter=lfs diff=lfs merge=lfs -text
+*.bsqsetup filter=lfs diff=lfs merge=lfs -text
+*.lbp2data filter=lfs diff=lfs merge=lfs -text
+*.lbp2setup filter=lfs diff=lfs merge=lfs -text
+*.mcdata filter=lfs diff=lfs merge=lfs -text
+*.mcsetup filter=lfs diff=lfs merge=lfs -text
+*.nsdx filter=lfs diff=lfs merge=lfs -text
+# Development Tool Formats
+*.eapx filter=lfs diff=lfs merge=lfs -text
+# Other
+*.exe filter=lfs diff=lfs merge=lfs -text 
+*.bin filter=lfs diff=lfs merge=lfs -text
+*.mv4 filter=lfs diff=lfs merge=lfs -text
