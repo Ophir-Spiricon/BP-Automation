@@ -37,10 +37,10 @@ import time
 import beamgagepy
 
 __author__ = "Russ Leikis"
-__copyright__ = "Copyright 2020, Ophir-Spiricon, LLC"
+__copyright__ = "Copyright 2022, Ophir-Spiricon, LLC"
 __credits__ = ["Russ Leikis"]
-__license__ = "GPL"
-__version__ = "0.2"
+__license__ = "MIT"
+__version__ = "0.3"
 __maintainer__ = "Russ Leikis"
 __email__ = "russ.leikis@mksinst.com"
 __status__ = "Alpha"
