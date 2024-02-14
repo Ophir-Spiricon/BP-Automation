@@ -64,8 +64,8 @@ import clr
 import ctypes
 
 import sys
-if sys.version_info[0:2] != (3, 4):
-    raise Exception('Requires python 3.4')
+if sys.version_info[0:2] != (3, 10):
+    raise Exception('Requires python 3.10')
 
 __author__ = "Russ Leikis"
 __copyright__ = "Copyright 2022, Ophir-Spiricon, LLC"
@@ -105,7 +105,7 @@ class BeamGagePy:
         Returns:
             object: An instantiated AutomatedBeamGage object, all interfaces are served via its properties
         """
-        # the class constructor automatically instantiates a BeamGage instance        
+        # the class constructor automatically instantiates a BeamGage instance
         import Spiricon.Automation as SpA
         self.beamgage = SpA.AutomatedBeamGage(instance_name, show_gui)
 
@@ -178,6 +178,8 @@ class DataSource:
         Returns:
             None:
         """
+        import Spiricon.Automation as SpA
+        self.spa = SpA
         self.beamgage = bg_instance
         self.beamgage.data_source = bg_instance.DataSource
 
@@ -260,7 +262,7 @@ class DataSource:
             Enum: A CalibrationStatus enumeration value.
         """
         status = self.beamgage.Calibration.Status
-        return CalibrationStatus(status)
+        return status
 
     def ignore_beam(self):
         """ In conjunction with the CalibrationStatus.BeamDetected status, instructs the analyzer to ignore the signal
@@ -333,8 +335,8 @@ class DataSource:
         Returns:
              list[float]: A list of floats which describe the current exposure range.
         """
-        return [self.beamgage.EGB.RangeMin(EGBDesignator.Exposure.value),
-                self.beamgage.EGB.RangeMax(EGBDesignator.Exposure.value)]
+        return [self.beamgage.EGB.RangeMin(self.spa.EGBDesignator.EXPOSURE),
+                self.beamgage.EGB.RangeMax(self.spa.EGBDesignator.EXPOSURE)]
 
     @property
     def exposure_increment(self) -> float:
@@ -343,7 +345,7 @@ class DataSource:
         Returns:
              float: The current increment value for the exposure setting.
         """
-        return self.beamgage.EGB.Increment(EGBDesignator.Exposure.value)
+        return self.beamgage.EGB.Increment(self.spa.EGBDesignator.EXPOSURE)
 
     @property
     def exposure_units(self) -> str:
@@ -352,7 +354,7 @@ class DataSource:
         Returns:
              str: A string value which describes the units applicable to the exposure setting.
         """
-        return self.beamgage.EGB.Units(EGBDesignator.Exposure.value)
+        return self.beamgage.EGB.Units(self.spa.EGBDesignator.EXPOSURE)
 
     @property
     def exposure(self):
@@ -368,12 +370,12 @@ class DataSource:
         Returns:
              float: A float value which represents the current exposure setting of the data source.
         """
-        return self.beamgage.EGB.Get(EGBDesignator.Exposure.value)
+        return self.beamgage.EGB.Get(self.spa.EGBDesignator.EXPOSURE)
 
     @exposure.setter
     def exposure(self, value):
         if isinstance(value, float):
-            self.beamgage.EGB.Set(EGBDesignator.Exposure.value, value)
+            self.beamgage.EGB.Set(self.spa.EGBDesignator.EXPOSURE, value)
         else:
             raise Exception("Argument for value must be a float")
 
@@ -384,8 +386,8 @@ class DataSource:
         Returns:
             list[float]: A list of floats which describe the current gain range.
         """
-        return [self.beamgage.EGB.RangeMin(EGBDesignator.Gain.value),
-                self.beamgage.EGB.RangeMax(EGBDesignator.Gain.value)]
+        return [self.beamgage.EGB.RangeMin(self.spa.EGBDesignator.GAIN),
+                self.beamgage.EGB.RangeMax(self.spa.EGBDesignator.GAIN)]
 
     @property
     def gain_increment(self):
@@ -394,7 +396,7 @@ class DataSource:
         Returns:
              float: The current increment value for the gain setting.
         """
-        return self.beamgage.EGB.Increment(EGBDesignator.Gain.value)
+        return self.beamgage.EGB.Increment(self.spa.EGBDesignator.GAIN)
 
     @property
     def gain_units(self):
@@ -403,7 +405,7 @@ class DataSource:
         Returns:
              str: A string value which describes the units applicable to the gain setting.
         """
-        return self.beamgage.EGB.Units(EGBDesignator.Gain.value)
+        return self.beamgage.EGB.Units(self.spa.EGBDesignator.GAIN)
 
     @property
     def gain(self):
@@ -418,11 +420,11 @@ class DataSource:
         Returns:
             float: A float value which represents the current gain setting of the data source.
         """
-        return self.beamgage.EGB.Get(EGBDesignator.Gain.value)
+        return self.beamgage.EGB.Get(self.spa.EGBDesignator.GAIN)
 
     @gain.setter
     def gain(self, value: float):
-        self.beamgage.EGB.Set(EGBDesignator.Gain.value, value)
+        self.beamgage.EGB.Set(self.spa.EGBDesignator.GAIN, value)
 
     @property
     def black_level_range(self):
@@ -431,8 +433,8 @@ class DataSource:
         Returns:
              list[float]: A list of floats which describe the current black level range.
         """
-        return [self.beamgage.EGB.RangeMin(EGBDesignator.BlackLevel.value),
-                self.beamgage.EGB.RangeMax(EGBDesignator.BlackLevel.value)]
+        return [self.beamgage.EGB.RangeMin(self.spa.EGBDesignator.BLACKLEVEL),
+                self.beamgage.EGB.RangeMax(self.spa.EGBDesignator.BLACKLEVEL)]
 
     @property
     def black_level_increment(self):
@@ -441,7 +443,7 @@ class DataSource:
         Returns:
             float: The current increment value for the black level setting.
         """
-        return self.beamgage.EGB.Increment(EGBDesignator.BlackLevel.value)
+        return self.beamgage.EGB.Increment(self.spa.EGBDesignator.BLACKLEVEL)
 
     @property
     def black_level_units(self):
@@ -450,7 +452,7 @@ class DataSource:
         Returns:
              str: A string value which describes the units applicable to the black level setting.
         """
-        return self.beamgage.EGB.Units(EGBDesignator.BlackLevel.value)
+        return self.beamgage.EGB.Units(self.spa.EGBDesignator.BLACKLEVEL)
 
     @property
     def black_level(self):
@@ -464,11 +466,11 @@ class DataSource:
         Returns:
              float: A float value which represents the current gain setting of the data source.
         """
-        return self.beamgage.EGB.Get(EGBDesignator.BlackLevel.value)
+        return self.beamgage.EGB.Get(self.spa.EGBDesignator.BLACKLEVEL)
 
     @black_level.setter
     def black_level(self, value: float):
-        self.beamgage.EGB.Set(EGBDesignator.BlackLevel.value, value)
+        self.beamgage.EGB.Set(self.spa.EGBDesignator.BLACKLEVEL, value)
 
     @property
     def trigger_delay_range(self):
