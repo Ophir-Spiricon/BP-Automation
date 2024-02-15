@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-""" A Python 3.7 wrapper class for BeamGage Professional v6.16
+""" A Python 3.10 wrapper class for BeamGage Professional v6.21
 
 This module is not intended to be run at the Python command line but is instead accessed by a secondary program
 module for the purposes of utilizing the BeamGage Professional Automation Interface.  The BeamGage Automation
@@ -68,10 +68,10 @@ if sys.version_info[0:2] != (3, 10):
     raise Exception('Requires python 3.10')
 
 __author__ = "Russ Leikis"
-__copyright__ = "Copyright 2022, Ophir-Spiricon, LLC"
+__copyright__ = "Copyright 2024, Ophir-Spiricon, LLC"
 __credits__ = ["Russ Leikis"]
 __license__ = "MIT"
-__version__ = "0.3"
+__version__ = "0.4"
 __maintainer__ = "Russ Leikis"
 __email__ = "russ.leikis@mksinst.com"
 __status__ = "Alpha"
@@ -79,7 +79,7 @@ __status__ = "Alpha"
 
 # main wrapper class
 class BeamGagePy:
-    """ A Python 3.7 wrapper class for BeamGage Professional v6.16
+    """ A Python 3.10 wrapper class for BeamGage Professional v6.21
 
     Attributes:
         current_frame (IAFrame):
@@ -923,8 +923,12 @@ class PositionalStabilityResults:
     def disable(self, result_name):
         self.beamgage.PositionalStabilityResults(result_name)
 
-
 # enumerations listed alphabetically """
+
+###
+# These are likely unneeded now that the Python.Net enum handling has changed in v3.0 and later.
+# It is possible to directly use the enums from the .NET interface.
+###
 class ApertureShape(enum.Enum):
     Rectangle = 0
     Ellipse = 1
