@@ -61,8 +61,8 @@ def main():
 
     # Background calibrate the camera (don't forget to block the beam)
     beamgage.data_source.ultracal()
-    cal_status = beamgage.data_source.ultracal_status()
-    print(cal_status.name)
+    cal_status = beamgage.data_source.ultracal_status
+    print(cal_status.ToString())
 
     # todo this isn't getting called despite getting registered to the event
     # def newframe_handler(source, args):
