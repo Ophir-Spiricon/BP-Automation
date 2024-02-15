@@ -144,10 +144,11 @@ class BeamGagePy:
         del self.power_energy_results
         del self.spatial_results
         del self.frame_results
-        del self.frameevents
+        # del self.frameevents
 
         self.beamgage.Instance.Shutdown()
         self.beamgage.Dispose()
+        del self.beamgage
 
     def get_frame_data(self):
         """ Get the current Frame
