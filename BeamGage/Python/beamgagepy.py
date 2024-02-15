@@ -927,7 +927,7 @@ class PositionalStabilityResults:
 
 ###
 # These are likely unneeded now that the Python.Net enum handling has changed in v3.0 and later.
-# It is possible to directly use the enums from the .NET interface.
+# It is possible to directly reference the enums from the Spiricon.Automation namespace.
 ###
 class ApertureShape(enum.Enum):
     Rectangle = 0
