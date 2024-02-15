@@ -82,7 +82,7 @@ def main():
     beamgage.data_source.start()
     time.sleep(5)
     status = beamgage.data_source.status
-    print(status)
+    print(status.ToString())
 
     # Obtaining results and frame data should be event driven or with the data source stopped
     data = beamgage.get_frame_data()

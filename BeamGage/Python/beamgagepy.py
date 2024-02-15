@@ -216,7 +216,7 @@ class DataSource:
              object: A DataSourceStatus enumeration value.
         """
         status = self.beamgage.DataSource.Status
-        return DataSourceStatus(status)
+        return status
 
     def start(self):
         """ Starts the data acquisition of the data source.
