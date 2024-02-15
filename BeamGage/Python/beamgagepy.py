@@ -565,7 +565,7 @@ class Partition:
     def delete_partition(self, string_name):
         self.beamgage.Partition.Delete(string_name)
 
-    def move_partition(self, string_name):
+    def move_partition(self, center_x, center_y, width, height, string_name):
         self.beamgage.Partition.Move(center_x, center_y, width, height, string_name)
 
     def rename_partition(self, string_name, old_string_name):
