@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-""" A Python 3.7 example client for BeamGage Professional v6.16
+""" A Python 3.10 example client for BeamGage Professional v6.21
 
 This module is intended as a client program for the purposes of utilizing the BeamGage Professional
 Automation Interface.  The BeamGage Automation Interface is an API which interfaces with the BeamGage beam profiling
@@ -37,10 +37,10 @@ import time
 import beamgagepy
 
 __author__ = "Russ Leikis"
-__copyright__ = "Copyright 2022, Ophir-Spiricon, LLC"
+__copyright__ = "Copyright 2024, Ophir-Spiricon, LLC"
 __credits__ = ["Russ Leikis"]
 __license__ = "MIT"
-__version__ = "0.3"
+__version__ = "0.4"
 __maintainer__ = "Russ Leikis"
 __email__ = "russ.leikis@mksinst.com"
 __status__ = "Alpha"
@@ -61,8 +61,8 @@ def main():
 
     # Background calibrate the camera (don't forget to block the beam)
     beamgage.data_source.ultracal()
-    cal_status = beamgage.data_source.ultracal_status()
-    print(cal_status.name)
+    cal_status = beamgage.data_source.ultracal_status
+    print(cal_status.ToString())
 
     # todo this isn't getting called despite getting registered to the event
     # def newframe_handler(source, args):
@@ -82,7 +82,7 @@ def main():
     beamgage.data_source.start()
     time.sleep(5)
     status = beamgage.data_source.status
-    print(status)
+    print(status.ToString())
 
     # Obtaining results and frame data should be event driven or with the data source stopped
     data = beamgage.get_frame_data()
