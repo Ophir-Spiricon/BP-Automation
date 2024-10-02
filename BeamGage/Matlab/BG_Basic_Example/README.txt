@@ -20,6 +20,25 @@ department.
 Changes in this version:
 -	Initial beta release
 
+    PLEASE NOTE: Using the BeamGage Professional automation interface via
+    a Matlab client is not a supported feature.  Matlab support listed in our
+    catalog is about reading the HDF5 file format used by BeamGage.
+
+    Matlab DOES natively support:
+        - reading HDF5 files via native hd5 functions
+            - https://www.mathworks.com/help/matlab/hdf5-files.html
+        - working with standalone .NET assemblies
+            - https://www.mathworks.com/help/matlab/matlab_external/using-net-from-matlab-an-overview.html
+
+    Matlab DOES NOT work well with:
+        - working with a .NET server that is not a single standalone assembly
+        - The primary limitation is in the way that Matlab references .NET assemblies
+            - It expects a standalone assembly registered in the global assembly cache (GAC).
+            - It expects a standalone assembly on the file system that can be deployed into the Matlab
+             installation directory or deployed alongside a compiled Matlab executable.
+        - Matlab CAN BE used this way, but it will always have these limitations unless they support referencing
+        .NET assemblies that is deployed in-place to the file system.
+
 /////////////////////////////////////////////////////////////////////////////
 This file contains a description of the provided files in this package.
 
@@ -28,7 +47,7 @@ This file contains a description of the provided files in this package.
 	Interface via Matlab.  Inline comments are provided as basic documentation.
 	Full class documentation of the interface provided with BeamGage 
 	Professional software installation and may be accessed via the Windows 
-	Start Menu->Spiricon documentation->BeamGage Professional Automation 
+	Start Menu->Beam Profiler Documentation->BeamGage Professional Automation
 	Interface.lnk
 
 setup\beammaker.bgSetup

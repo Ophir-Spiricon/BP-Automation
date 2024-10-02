@@ -1,3 +1,13 @@
+# -*- coding: utf-8 -*-
+""" A Python 3.10 wrapper class for BeamSquared v2.5.2
+
+    This class was contributed by a customer it illustrates an implementation of a wrapper for the AutomatedBeamSquared
+    class.  This is not a replete example and additional implementation for instantiation and shutdown of the automation
+    server.
+
+    This class has not been reviewed for at this time.
+"""
+
 class Spiricon_Beamsquared:
     def __init__(self):
         self.beamsquare = AutomatedBeamSquared()
