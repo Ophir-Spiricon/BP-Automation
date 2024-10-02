@@ -584,3 +584,4 @@ dmypy.json
 *.lvlps
 .cache/
 
+.idea/
