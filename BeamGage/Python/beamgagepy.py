@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-""" A Python 3.10 wrapper class for BeamGage Professional v6.21
+""" A Python 3.10 wrapper class for BeamGage Professional v6.21 or later
 
 This module is not intended to be run at the Python command line but is instead accessed by a secondary program
 module for the purposes of utilizing the BeamGage Professional Automation Interface.  The BeamGage Automation
@@ -49,7 +49,6 @@ Todo:
         * Crosshair
         * Cursor
         * SmearCorrection
-    * Resolve event handler delegate functionality
     * Document specific pain points of features and best practices and abstract complexity as possible
     * Flush out example docstring
     * Implement individual results access
@@ -109,17 +108,8 @@ class BeamGagePy:
         import Spiricon.Automation as SpA
         self.beamgage = SpA.AutomatedBeamGage(instance_name, show_gui)
 
-        # define handler delegate for OnNewFrame event
-        # the delegate is executed in the BeamGage process scope and memory space
-        # actions defined in the delegate should be kept to a minimum as to not halt the BeamGage data
-        # acquisition sequence
-        # todo this isn't getting called despite getting registered to the event
-        # def newframe_handler(source, args):
-        #     print('test: my_handler called!')
-
         # register the delegate to the event handler
-        # self.frameevents = SpA.AutomationFrameEvents(self.beamgage.ResultsPriorityFrame)
-        # self.frameevents.OnNewFrame += newframe_handler
+        self.frameevents = SpA.AutomationFrameEvents(self.beamgage.ResultsPriorityFrame)
 
         # initialize control classes
         self.data_source = DataSource(self.beamgage)
@@ -144,7 +134,7 @@ class BeamGagePy:
         del self.power_energy_results
         del self.spatial_results
         del self.frame_results
-        # del self.frameevents
+        del self.frameevents
 
         self.beamgage.Instance.Shutdown()
         self.beamgage.Dispose()
@@ -929,6 +919,8 @@ class PositionalStabilityResults:
 # These are likely unneeded now that the Python.Net enum handling has changed in v3.0 and later.
 # It is possible to directly reference the enums from the Spiricon.Automation namespace.
 ###
+
+
 class ApertureShape(enum.Enum):
     Rectangle = 0
     Ellipse = 1

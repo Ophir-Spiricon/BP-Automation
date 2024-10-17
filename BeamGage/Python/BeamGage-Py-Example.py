@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-""" A Python 3.10 example client for BeamGage Professional v6.21
+""" A Python 3.10 example client for BeamGage Professional v6.21 or later
 
 This module is intended as a client program for the purposes of utilizing the BeamGage Professional
 Automation Interface.  The BeamGage Automation Interface is an API which interfaces with the BeamGage beam profiling
@@ -25,6 +25,7 @@ Professional tier licenses for Ophir brand beam profiling cameras may be purchas
 MKS | Ophir  The True Measure of Laser Performance™
 
 Todo:
+    * Resolve functionality of event delegates that require arguments
     * Flush out inline documentation
     * Consider additional scenarios using more features and best practices
 """
@@ -40,10 +41,10 @@ __author__ = "Russ Leikis"
 __copyright__ = "Copyright 2024, Ophir-Spiricon, LLC"
 __credits__ = ["Russ Leikis"]
 __license__ = "MIT"
-__version__ = "0.4"
+__version__ = "0.5"
 __maintainer__ = "Russ Leikis"
 __email__ = "russ.leikis@mksinst.com"
-__status__ = "Alpha"
+__status__ = "beta"
 
 
 def main():
@@ -64,19 +65,22 @@ def main():
     cal_status = beamgage.data_source.ultracal_status
     print(cal_status.ToString())
 
-    # todo this isn't getting called despite getting registered to the event
-    # def newframe_handler(source, args):
-    #     print('my_handler called!')
-    #
-    #     # print('\n*Spatial Results from Event*')
-    #     # beamgage.spatial_results.update()
-    #     # print("D4S (X,Y): %.3f, %.3f" % (beamgage.spatial_results.d_4sigma_x, beamgage.spatial_results.d_4sigma_y))
-    #     # print("D4S Dia: %.3f" % beamgage.spatial_results.d_4sigma_dia)
-    #
-    # d = beamgage.frameevents.OnNewFrame(newframe_handler)
-    #
-    # # Register event handler with OnNewFrame Event
-    # beamgage.frameevents.OnNewFrame += d
+    """ 
+        Note: event delegates that would require any arguments get registered to the event but are never called
+        we suspect that this is due to serialization issues across the process boundaries
+        if this can work, then it is likely about getting the delegate signature precisely matched to how it
+        is being serialized
+    """
+    def newframe_handler():
+        print('my_handler called!')
+
+        print('\n*Spatial Results from Event*')
+        beamgage.spatial_results.update()
+        print("D4S (X,Y): %.3f, %.3f" % (beamgage.spatial_results.d_4sigma_x, beamgage.spatial_results.d_4sigma_y))
+        print("D4S Dia: %.3f" % beamgage.spatial_results.d_4sigma_dia)
+
+    # Register event handler with OnNewFrame Event
+    beamgage.frameevents.OnNewFrame += newframe_handler
 
     # Acquire data
     beamgage.data_source.start()
@@ -84,14 +88,12 @@ def main():
     status = beamgage.data_source.status
     print(status.ToString())
 
-    # Obtaining results and frame data should be event driven or with the data source stopped
+    """
+        Note: If not using the OnNewFrame event, then obtaining results and frame data should be occur with the data
+        source stopped
+    """
     data = beamgage.get_frame_data()
     print("Pixel Value (top-left) %.3f: " % (data.DoubleData[0]))
-
-    print("\n-Spatial Results-")
-    beamgage.spatial_results.update()
-    print("D4S (X,Y): %.3f, %.3f" % (beamgage.spatial_results.d_4sigma_x, beamgage.spatial_results.d_4sigma_y))
-    print("D4S Dia: %.3f" % beamgage.spatial_results.d_4sigma_dia)
 
     print("\n-Frame Results-")
     beamgage.frame_results.update()
@@ -120,7 +122,7 @@ def main():
     print("Range: %.3f%% Max A/D" % noise_range)
 
     # Unregister from events and shutdown
-    # beamgage.frameevents.OnNewFrame -= newframe_handler
+    beamgage.frameevents.OnNewFrame -= newframe_handler
     beamgage.shutdown()
 
 
