@@ -24,10 +24,6 @@ Professional tier licenses for Ophir brand beam profiling cameras may be purchas
 
 MKS | Ophir  The True Measure of Laser Performance™
 
-Todo:
-    * Resolve functionality of event delegates that require arguments
-    * Flush out inline documentation
-    * Consider additional scenarios using more features and best practices
 """
 
 
@@ -37,14 +33,14 @@ import time
 
 import beamgagepy
 
-__author__ = "Russ Leikis"
+__author__ = "R. Leikis"
 __copyright__ = "Copyright 2024, Ophir-Spiricon, LLC"
-__credits__ = ["Russ Leikis"]
+__credits__ = ["R. Leikis, D. Garner"]
 __license__ = "MIT"
-__version__ = "0.5"
-__maintainer__ = "Russ Leikis"
-__email__ = "russ.leikis@mksinst.com"
-__status__ = "beta"
+__version__ = "1.0"
+__maintainer__ = "Ophir-Spiricon R&D"
+__email__ = "service.ophir.usa@mksinst.com"
+__status__ = "Release"
 
 
 def main():
@@ -61,25 +57,21 @@ def main():
     print("Exposure Range: %s" % exp_range)
 
     # Background calibrate the camera (don't forget to block the beam)
+    # register for the calibration status change event to monitor it
+    def calibrationstatus_handler():
+        cal_status = beamgage.data_source.ultracal_status
+        print(cal_status.ToString())
+
+    beamgage.calibrationevents.OnCalibrationStatusChange += calibrationstatus_handler
     beamgage.data_source.ultracal()
-    cal_status = beamgage.data_source.ultracal_status
-    print(cal_status.ToString())
 
-    """ 
-        Note: event delegates that would require any arguments get registered to the event but are never called
-        we suspect that this is due to serialization issues across the process boundaries
-        if this can work, then it is likely about getting the delegate signature precisely matched to how it
-        is being serialized
-    """
     def newframe_handler():
-        print('my_handler called!')
-
         print('\n*Spatial Results from Event*')
         beamgage.spatial_results.update()
         print("D4S (X,Y): %.3f, %.3f" % (beamgage.spatial_results.d_4sigma_x, beamgage.spatial_results.d_4sigma_y))
         print("D4S Dia: %.3f" % beamgage.spatial_results.d_4sigma_dia)
 
-    # Register event handler with OnNewFrame Event
+    # Register event delegate with OnNewFrame Event
     beamgage.frameevents.OnNewFrame += newframe_handler
 
     # Acquire data

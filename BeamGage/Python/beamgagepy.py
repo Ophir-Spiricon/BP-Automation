@@ -30,8 +30,12 @@ Example:
 
     beamgage = beamgagepy.BeamGagePy("camera", True)
 
+As a scripting language, integration of .NET libraries via Python is sometimes more complicated and can suffer
+from some limitations.  The example wrapper class provides solutions and implementation for all the unusual cases.
+From here this wrapper can be extended to meet the needs of almost any project.  Here are some suggested ideas.
 Todo:
-    * Complete wrapper implementation of other individual BeamGage interfaces
+    * Implement access of results individually or limit to individual needs
+    * Complete wrapper implementation of other individual BeamGage interfaces based on individual needs
         * Calibration
         * Processor
         * ResultsPriorityFrame
@@ -40,7 +44,6 @@ Todo:
         * ManualAperture
         * FrameBuffer
         * Commenting
-        
         * PowerEnergy
         * OpticalScale
         * ProgrammableSettings
@@ -49,10 +52,7 @@ Todo:
         * Crosshair
         * Cursor
         * SmearCorrection
-    * Document specific pain points of features and best practices and abstract complexity as possible
-    * Flush out example docstring
-    * Implement individual results access
-    * Ensure shutdown releases all references and BeamGage closes
+    * Ensure shutdown releases all added references
 """
 
 import enum
@@ -66,14 +66,14 @@ import sys
 if sys.version_info[0:2] != (3, 10):
     raise Exception('Requires python 3.10')
 
-__author__ = "Russ Leikis"
+__author__ = "R. Leikis"
 __copyright__ = "Copyright 2024, Ophir-Spiricon, LLC"
-__credits__ = ["Russ Leikis"]
+__credits__ = ["R. Leikis"]
 __license__ = "MIT"
-__version__ = "0.4"
-__maintainer__ = "Russ Leikis"
-__email__ = "russ.leikis@mksinst.com"
-__status__ = "Alpha"
+__version__ = "1.0"
+__maintainer__ = "Ophir-Spiricon R&D"
+__email__ = "service.ophir.usa@mksinst.com"
+__status__ = "Release"
 
 
 # main wrapper class
@@ -108,8 +108,9 @@ class BeamGagePy:
         import Spiricon.Automation as SpA
         self.beamgage = SpA.AutomatedBeamGage(instance_name, show_gui)
 
-        # register the delegate to the event handler
+        # initialize events
         self.frameevents = SpA.AutomationFrameEvents(self.beamgage.ResultsPriorityFrame)
+        self.calibrationevents = SpA.AutomationCalibrationEvents(self.beamgage.Calibration)
 
         # initialize control classes
         self.data_source = DataSource(self.beamgage)
