@@ -10,8 +10,26 @@
 
 class Spiricon_Beamsquared:
     def __init__(self):
-        self.beamsquare = AutomatedBeamSquared()
+        #Handling server start up issues. Try to connect the first time, if it fails, try again
+        try:
+            self.beamsquare = AutomatedBeamSquared()
+            time.sleep(3)
+        except:
+            self.beamsquare = AutomatedBeamSquared()
+            print(self.beamsquare.RunManager.RunStatus)
+            if str(self.beamsquare.RunManager.RunStatus) == "READY":
+                #print("Connected to M2 Application")
+            else:
+                print("Failed to connect to M2 Application")
     
+    def close(self):
+        #Add close to shutdown server connect connectly
+        self.beamsquare.Instance.Shutdown()
+        return 0
+    def __del__(self):
+        #Call self.close() once the instant finished.
+        self.close()
+        
     def live(self,status):
         self.__live = status
         self.beamsquare.Capture.LiveMode = self.__live 
