@@ -114,6 +114,7 @@ class BeamGagePy:
 
         # initialize control classes
         self.data_source = DataSource(self.beamgage)
+        self.save_load_setup = SaveLoadSetup(self.beamgage)
         self.partition = Partition(self.beamgage)
 
         # initialize results classes
@@ -131,6 +132,7 @@ class BeamGagePy:
             None:
         """
         del self.data_source
+        del self.save_load_setup
         del self.partition
         del self.power_energy_results
         del self.spatial_results
@@ -509,6 +511,43 @@ class DataSource:
     def trigger_state(self, value: bool):
         self.beamgage.ExternalTrigger.TriggerIn = value
 
+
+class SaveLoadSetup:
+    """ A constructor used by BeamGagePy to wrap the IASaveLoadSetup interface
+        Normally managed by the BeamGagePy class.  It is not necessary to call this constructor directly.
+
+        Args:
+              bg_instance (Any): An AutomatedBeamGage instance
+        """
+
+    def __init__(self, bg_instance):
+        self.beamgage = bg_instance
+
+    def save_setup(self, filename):
+        """ Saves a .bgSetup file containing the current analyzer and camera settings.
+
+        The data source should be stopped to use the IASaveLoadSetup interface, in best practice.
+
+        Returns:
+            None:
+        """
+        if self.beamgage.DataSource.Status != DataSourceStatus.Running:
+            self.beamgage.SaveLoadSetup.SaveSetup(filename)
+        else:
+            raise RuntimeError("Save Setup called while data source is Running")
+
+    def load_setup(self, filename):
+        """ Loads a .bgSetup file restoring both analyzer and camera settings.
+
+        The data source should be stopped to use the IASaveLoadSetup interface, in best practice.
+
+        Returns:
+            None:
+        """
+        if self.beamgage.DataSource.Status != DataSourceStatus.Running:
+            self.beamgage.SaveLoadSetup.LoadSetup(filename)
+        else:
+            raise RuntimeError("Load Setup called while data source is Running")
 
 class Export:
     """ A constructor used by BeamGagePy to wrap the IAExport interface
