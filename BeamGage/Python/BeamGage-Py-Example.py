@@ -34,10 +34,10 @@ import time
 import beamgagepy
 
 __author__ = "R. Leikis"
-__copyright__ = "Copyright 2024, Ophir-Spiricon, LLC"
+__copyright__ = "Copyright 2025, Ophir-Spiricon, LLC"
 __credits__ = ["R. Leikis, D. Garner"]
 __license__ = "MIT"
-__version__ = "1.0"
+__version__ = "1.1"
 __maintainer__ = "Ophir-Spiricon R&D"
 __email__ = "service.ophir.usa@mksinst.com"
 __status__ = "Release"
@@ -49,6 +49,7 @@ def main():
 
     # Client will startup automatically acquiring data
     beamgage.data_source.stop()
+    beamgage.save_load_setup.load_setup("beammaker.bgsetup")
 
     source_name = beamgage.data_source.current_source
     print("Source: %s" % source_name)
