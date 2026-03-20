@@ -10,7 +10,7 @@ The latest version of Ophir beam profiling software is available for download at
 
 Professional tier licenses for MKS Ophir brand beam profiling cameras may be purchased by contacting:
 
-**Ophir USA Product Support**
+**MKS Ophir USA Product Support**
 +1 800-383-0814
 [service.ophir.usa@mksinst.com](mailto://service.ophir.usa@mksinst.com)
 
