@@ -1,16 +1,16 @@
-# MKS Ophir Beam Profiling Automation Interfaces
-Automation Interface examples and documentation for Ophir-Spiricon laser beam profiling products
+# MKS Ophir® Beam Profiling Automation Interfaces
+Automation Interface examples and documentation for MKS Ophir® laser beam profiling products
 
 The classes and all associated subclasses, enumerations, and example code are provided as-is with no express guarantee or warranty of functionality and may be provided and updated independently of product releases.
 
 Each program/interface/module may be customized as needed but all client functions should be implemented in a secondary program module.  Feedback or suggestions are welcomed for future versions.
 
-The latest version of Ophir beam profiling software is available for download at:
+The latest versions of MKS Ophir® beam profiling software is available for download at:
 [https://www.ophiropt.com/laser--measurement/software-download](https://www.ophiropt.com/laser--measurement/software-download)
 
-Professional tier licenses for MKS Ophir brand beam profiling cameras may be purchased by contacting:
+Professional tier licenses for MKS Ophir® brand beam profiling cameras may be purchased by contacting:
 
-**MKS Ophir USA Product Support**
+**MKS Ophir® USA Product Support**
 +1 800-383-0814
 [service.ophir.usa@mksinst.com](mailto://service.ophir.usa@mksinst.com)
 
@@ -52,7 +52,7 @@ Shop for beam profilers on our website or direct sales inquiries to:
 * Server 2016 
 * Server version 1709
      
- Additionally  .NET 4.7.2 is supported on Windows:
+ Additionally .NET 4.7.2 is supported on Windows:
 * 10 version 1803
 * 10 version 1809
 * Server version 1803
@@ -95,7 +95,7 @@ Shop for beam profilers on our website or direct sales inquiries to:
 
 
 ---
-#### MKS | Ophir  - The True Measure of Laser Performance™
+#### MKS | Ophir®  - The True Measure of Laser Performance™
 
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FOphir-Spiricon%2FBP-Automation&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
